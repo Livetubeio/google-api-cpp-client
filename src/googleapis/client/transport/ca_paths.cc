@@ -28,10 +28,7 @@ namespace googleapis {
 namespace client {
 
 std::string DetermineDefaultCaCertsPath() {
-  const std::string program_path(GetCurrentProgramFilenamePath());
-  auto dirname(client::StripBasename(program_path));
-  dirname.append("roots.pem");  // dirname has ending slash.
-  return dirname;
+  return "/etc/ssl/certs/ca-certificates.crt";
 }
 
 }  // namespace client

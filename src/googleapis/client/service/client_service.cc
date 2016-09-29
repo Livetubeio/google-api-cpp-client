@@ -53,8 +53,7 @@ ClientServiceRequest::ClientServiceRequest(
   if (service->in_shutdown()) {
     return;
   }
-  uri_template_ = service->service_url();
-  uri_template_.append(uri_template.as_string());
+  uri_template_ = uri_template.as_string();
   http_request_.reset(service->transport()->NewHttpRequest(method));
   http_request_->set_credential(credential);  // can be NULL
   // We own the request so make sure it wont auto destroy

@@ -96,15 +96,7 @@ set(GOOGLEAPIS_SERVICE_REPOSITORY_DIR ${CMAKE_SOURCE_DIR}/service_apis)
 
 add_subdirectory(src)
 
-if (googleapis_build_samples)
-  set(googleapis_build_service_apis true)  # force on
-endif()
-if (googleapis_build_service_apis)
-  add_subdirectory(service_apis)
-endif()
+add_subdirectory(service_apis)
 
 # Build samples after the service apis
 # but keep them under src
-if (googleapis_build_samples)
-  add_subdirectory(src/samples)
-endif()

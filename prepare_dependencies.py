@@ -845,8 +845,12 @@ class GFlagsPackageInstaller(PackageInstaller):
     """Standard PackageInstaller initializer."""
     super(GFlagsPackageInstaller, self).__init__(config, url)
     self._archive_file = self._archive_file.replace('-no-svn-files', '')
-    self._package_name = self._package_name.replace('-no-svn-files', '')
-    self._package_path = self._package_path.replace('-no-svn-files', '')
+    self._archive_file = self._archive_file.replace('release', 'googlemock-release')
+    self._archive_file = self._archive_file.replace('v2.0', 'gflags-2.0')
+    self._package_name = self._package_name.replace('release', 'googlemock-release')
+    self._package_name = self._package_name.replace('v2.0', 'gflags-2.0')
+    self._package_path = self._package_path.replace('v2.0', 'gflags-2.0')
+    self._package_path = self._package_path.replace('release', 'googlemock-release')
     self._msbuild_args = '/p:Configuration=Release;Platform=x86'
     self._vc_upgrade_from_project_path = (
         '%s\\vsprojects\\libgflags\\libgflags.vcproj' % self._package_path)
@@ -890,6 +894,13 @@ class GMockPackageInstaller(PackageInstaller):
       url: (string)  The URL to download from.
     """
     super(GMockPackageInstaller, self).__init__(config, url)
+    self._archive_file = self._archive_file.replace('-no-svn-files', '')       
+    self._archive_file = self._archive_file.replace('release', 'googlemock-release')
+    self._archive_file = self._archive_file.replace('v2.0', 'gflags-2.0')      
+    self._package_name = self._package_name.replace('release', 'googlemock-release')
+    self._package_name = self._package_name.replace('v2.0', 'gflags-2.0')      
+    self._package_path = self._package_path.replace('v2.0', 'gflags-2.0')      
+    self._package_path = self._package_path.replace('release', 'googlemock-release')
 
   def MaybeTweakAfterUnpackage(self):
     if self._config.compiler == VS_COMPILER:
@@ -908,18 +919,18 @@ class GMockPackageInstaller(PackageInstaller):
         with open(cmake_utils_path, 'w') as f:
           f.write(text)
 
-    gtest_port_h = os.path.join(
-        self._package_path, 'gtest', 'include',
-        'gtest', 'internal', 'gtest-port.h')
-    with open(gtest_port_h, 'r') as f:
-      text = f.read()
-    text = text.replace(
-        '# define GTEST_HAS_PTHREAD ('
-        'GTEST_OS_LINUX || GTEST_OS_MAC || GTEST_OS_HPUX)',
-        '# define GTEST_HAS_PTHREAD ('
-        'GTEST_OS_LINUX || GTEST_OS_MAC || GTEST_OS_HPUX || GTEST_OS_CYGWIN)')
-    with open(gtest_port_h, 'w') as f:
-      f.write(text)
+    #gtest_port_h = os.path.join(
+    #    self._package_path, 'gtest', 'include',
+    #    'gtest', 'internal', 'gtest-port.h')
+    #with open(gtest_port_h, 'r') as f:
+    #  text = f.read()
+    #text = text.replace(
+    #    '# define GTEST_HAS_PTHREAD ('
+    #    'GTEST_OS_LINUX || GTEST_OS_MAC || GTEST_OS_HPUX)',
+    #    '# define GTEST_HAS_PTHREAD ('
+    #    'GTEST_OS_LINUX || GTEST_OS_MAC || GTEST_OS_HPUX || GTEST_OS_CYGWIN)')
+    #with open(gtest_port_h, 'w') as f:
+    #  f.write(text)
 
   def Configure(self):
     return
@@ -951,6 +962,13 @@ class GLogPackageInstaller(PackageInstaller):
     """
     super(GLogPackageInstaller, self).__init__(config, url)
     self._msbuild_args = '/p:Configuration=Release;Platform=x86'
+    self._archive_file = self._archive_file.replace('-no-svn-files', '')       
+    self._archive_file = self._archive_file.replace('release', 'googlemock-release')
+    self._archive_file = self._archive_file.replace('v2.0', 'gflags-2.0')      
+    self._package_name = self._package_name.replace('release', 'googlemock-release')
+    self._package_name = self._package_name.replace('v2.0', 'gflags-2.0')      
+    self._package_path = self._package_path.replace('v2.0', 'gflags-2.0')      
+    self._package_path = self._package_path.replace('release', 'googlemock-release')
     self._vc_upgrade_from_project_path = (
         '%s\\vsprojects\\libglog\\libglog.vcproj' % self._package_path)
     self._vc_project_path = (
@@ -1078,19 +1096,18 @@ class Installer(object):
         # Only used for tests and samples.
         'gflags': (GFlagsPackageInstaller(
             config,
-            'http://gflags.googlecode.com/files'
-            '/gflags-2.0-no-svn-files.tar.gz')),
+            'https://github.com/gflags/gflags/archive/v2.0.tar.gz')),
 
         # GLog is the logging mechanism used through the client API
         'glog': (GLogPackageInstaller(
             config,
-            'http://google-glog.googlecode.com/files/glog-0.3.3.tar.gz')),
+            'https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/google-glog/glog-0.3.3.tar.gz')),
 
         # GMock (and included GTest) are only used for tests, not runtime
         # Only used for tests.
         'gmock': (GMockPackageInstaller(
             config,
-            'http://googlemock.googlecode.com/files/gmock-1.6.0.zip')),
+            'https://github.com/google/googlemock/archive/release-1.6.0.tar.gz')),
 
         # For now we use JsonCpp for JSON support in the Client Service Layer
         # and other places where we process JSON encoded data.

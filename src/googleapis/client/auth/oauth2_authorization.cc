@@ -112,7 +112,7 @@ string OAuth2AuthorizationFlow::SimpleJsonData::InitFromContainer(
     return "";
   }
   string name = json_.begin().key().asString();
-  json_ = *json_.begin();
+  json_.swap(*json_.begin());
   return name;
 }
 bool OAuth2AuthorizationFlow::SimpleJsonData::GetString(
