@@ -98,5 +98,18 @@ add_subdirectory(src)
 
 add_subdirectory(service_apis)
 
+set(GOOGLE_LIBRARIES
+        googleapis_curl_http
+        googleapis_openssl_codec
+        googleapis_jsoncpp
+        googleapis_http
+        googleapis_json
+        googleapis_scribes
+        googleapis_utils
+        googleapis_internal CACHE INTERNAL "")
+set(GOOGLE_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/src CACHE INTERNAL "")
+set(GOOGLE_YOUTUBE_LIBRARIES google_youtube_api CACHE INTERNAL "")
+set(GOOGLE_YOUTUBE_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/service_apis/youtube CACHE INTERNAL "")
+
 # Build samples after the service apis
 # but keep them under src
